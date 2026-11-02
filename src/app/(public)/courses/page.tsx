@@ -12,6 +12,8 @@ import {
   createMetadata,
 } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Courses & LMS",
   description:
