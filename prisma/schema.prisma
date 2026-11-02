@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  MEMBER
+  ADMIN
+}
+
+enum PackageType {
+  EDU
+  BP
+}
+
+enum PlacementLeg {
+  LEFT
+  RIGHT
+  AUTO
+}
+
+enum ClubTier {
+  NONE
+  SILVER
+  GOLD
+  DIAMOND
+}
+
+enum CommissionType {
+  DIRECT_REFERRAL
+  LEVEL_INCOME
+  ROYALTY_SILVER
+  ROYALTY_GOLD
+  ROYALTY_DIAMOND
+  WALLET_WITHDRAWAL
+  WALLET_CREDIT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id             String        @id @default(cuid())
+  memberCode     String        @unique
+  email          String        @unique
+  passwordHash   String
+  name           String
+  phone          String?
+  role           UserRole      @default(MEMBER)
+  packageType    PackageType?
+  sponsorId      String?
+  sponsor        User?         @relation("SponsorTree", fields: [sponsorId], references: [id])
+  downlines      User[]        @relation("SponsorTree")
+  placementLeg   PlacementLeg  @default(AUTO)
+  clubTier       ClubTier      @default(NONE)
+  walletBalance  Float         @default(0)
+  isActive       Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  enrollments       Enrollment[]
+  commissionsEarned Commission[] @relation("CommissionRecipient")
+  commissionsSource Commission[] @relation("CommissionSource")
+  courseProgress    CourseProgress[]
+  sessions          Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model CompensationSettings {
+  id                         Int      @id @default(1)
+  directReferralStandardPct  Float    @default(5)
+  directReferralOfferPct     Float    @default(10)
+  offerActive                Boolean  @default(false)
+  level1Pct                  Float    @default(5)
+  level2Pct                  Float    @default(10)
+  level3Pct                  Float    @default(15)
+  level4Pct                  Float    @default(20)
+  level5Pct                  Float    @default(25)
+  level6Pct                  Float    @default(30)
+  level7Pct                  Float    @default(35)
+  level8Pct                  Float    @default(40)
+  level9Pct                  Float    @default(45)
+  level10Pct                 Float    @default(50)
+  royaltyTotalPct            Float    @default(10)
+  silverPoolPct              Float    @default(5)
+  goldPoolPct                Float    @default(3)
+  diamondPoolPct             Float    @default(2)
+  silverMinDirectBp          Int      @default(10)
+  goldMinDirectBp            Int      @default(25)
+  diamondMinDirectBp         Int      @default(50)
+  silverMinTeamBp            Int      @default(100)
+  goldMinTeamBp              Int      @default(500)
+  diamondMinTeamBp           Int      @default(2000)
+  eduPackageFee              Float    @default(5000)
+  bpPackageFee               Float    @default(10000)
+  updatedAt                  DateTime @updatedAt
+}
+
+model Enrollment {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packageType  PackageType
+  amount       Float
+  status       TransactionStatus @default(COMPLETED)
+  createdAt    DateTime      @default(now())
+
+  commissions  Commission[]
+}
+
+model Commission {
+  id             String           @id @default(cuid())
+  recipientId    String
+  recipient      User             @relation("CommissionRecipient", fields: [recipientId], references: [id])
+  sourceUserId   String?
+  sourceUser     User?            @relation("CommissionSource", fields: [sourceUserId], references: [id])
+  enrollmentId   String?
+  enrollment     Enrollment?      @relation(fields: [enrollmentId], references: [id])
+  type           CommissionType
+  level          Int?
+  amount         Float
+  percentApplied Float
+  description    String
+  createdAt      DateTime         @default(now())
+}
+
+model RoyaltyCycle {
+  id              String   @id @default(cuid())
+  periodLabel     String
+  totalTurnover   Float
+  distributedAt   DateTime @default(now())
+}
+
+model Course {
+  id             String       @id @default(cuid())
+  slug           String       @unique
+  titleHi        String
+  titleEn        String
+  descriptionHi  String       @default("")
+  descriptionEn  String       @default("")
+  category       String
+  packageGate    PackageType?
+  sortOrder      Int          @default(0)
+  isPublished    Boolean      @default(true)
+  lessonsJson    String       @default("[]")
+  progress       CourseProgress[]
+}
+
+model CourseProgress {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  percent    Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, courseId])
+}

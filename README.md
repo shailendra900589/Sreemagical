@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sri Magicale — Education & Youth Empowerment (Next.js)
 
-## Getting Started
+Professional web platform for **SM Groups / Sri Magicale**: public marketing site, member dashboard (Edu & BP packages), MLM-style compensation engine, and admin controls for **live percentage updates** and **team tree insertion**.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS v4
+- Prisma ORM + SQLite (dev) — switch `DATABASE_URL` to PostgreSQL for production
+- Cookie sessions (`sm_session`)
+
+## Quick start
 
 ```bash
+cd sri-magicale
+npm install
+npm run db:push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Demo accounts (after seed)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role   | Email                 | Password  |
+|--------|------------------------|-----------|
+| Admin  | admin@srimagicale.in   | admin123  |
+| Member | demo@srimagicale.in    | demo123   |
 
-## Learn More
+## Business rules implemented
 
-To learn more about Next.js, take a look at the following resources:
+- **Edu (₹5,000)**: LMS access only — no direct / level / royalty commissions on join.
+- **BP (₹10,000)**: Edu + trading modules + commissions on join.
+- **Direct sponsor income**: configurable standard / offer % (admin).
+- **Level income**: 10 uplines, each with admin-configurable %.
+- **Royalty**: Silver / Gold / Diamond pool % of monthly BP turnover (admin + qualification fields stored).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Admin panel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/admin/settings` — change referral, level, royalty, and package fees anytime.
+- `/admin/team` — insert a member ID between an upline and their direct downline.
 
-## Deploy on Vercel
+## Referral URLs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+/signup?Signup=<base64url(memberCode)>&Leg=L
+/signup?Signup=<base64url(memberCode)>&Leg=R
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Production notes
+
+- Set `DATABASE_URL` to PostgreSQL and run migrations.
+- Set `NEXT_PUBLIC_APP_URL` for correct referral links.
+- Add payment gateway webhooks before go-live (registration currently records enrollment immediately).
+- Schedule royalty distribution (cron calling `distributeRoyaltyForPeriod` in `src/lib/compensation.ts`).

@@ -1,26 +1,260 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy: #001a40;
+  --gold: #d4af37;
+  --background: #f3f5f9;
+  --foreground: #0f172a;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), var(--font-hindi), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), var(--font-hindi), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--gold) 35%, white);
+}
+
+/* —— Motion primitives —— */
+@keyframes sm-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sm-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sm-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sm-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.sm-animate-in {
+  animation: sm-fade-up 0.55s var(--ease-out) both;
+}
+
+.sm-animate-fade {
+  animation: sm-fade-in 0.4s var(--ease-out) both;
+}
+
+.sm-animate-scale {
+  animation: sm-scale-in 0.45s var(--ease-out) both;
+}
+
+.sm-stagger > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.sm-stagger > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.sm-stagger > *:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.sm-stagger > *:nth-child(4) {
+  animation-delay: 0.14s;
+}
+.sm-stagger > *:nth-child(5) {
+  animation-delay: 0.18s;
+}
+.sm-stagger > *:nth-child(6) {
+  animation-delay: 0.22s;
+}
+.sm-stagger > *:nth-child(7) {
+  animation-delay: 0.26s;
+}
+.sm-stagger > *:nth-child(8) {
+  animation-delay: 0.3s;
+}
+
+.sm-stagger > * {
+  animation: sm-fade-up 0.5s var(--ease-out) both;
+}
+
+.sm-card-lift {
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    border-color 0.25s ease;
+}
+
+.sm-card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px -12px rgba(0, 26, 64, 0.18),
+    0 4px 10px -4px rgba(15, 23, 42, 0.08);
+}
+
+.sm-press {
+  transition:
+    transform 0.15s var(--ease-out),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sm-press:active {
+  transform: scale(0.97);
+}
+
+.sm-nav-item {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Admin: stable layout — no remount jump / hover lift */
+.admin-page {
+  contain: layout style;
+}
+
+.admin-page .sm-animate-in,
+.admin-page .sm-animate-fade,
+.admin-page .sm-animate-scale,
+.admin-page .sm-stagger > * {
+  animation: none !important;
+}
+
+.admin-page .admin-panel {
+  transition: none;
+}
+
+.admin-page .admin-panel:hover,
+.admin-page .sm-card-lift:hover {
+  transform: none;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  border-color: rgb(226 232 240 / 0.8);
+}
+
+.admin-page .admin-kpi-row {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1279px) {
+  .admin-page .admin-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .admin-page .admin-kpi-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.admin-ledger-page {
+  width: 100%;
+}
+
+.admin-stat-grid > *,
+.admin-substat-grid > * {
+  min-width: 0;
+}
+
+.admin-table-wrap {
+  contain: layout;
+  width: 100%;
+}
+
+.admin-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 880px;
+}
+
+.admin-table td,
+.admin-table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-action-btn {
+  transition: background-color 0.15s ease;
+}
+
+.admin-action-btn:active {
+  transform: none;
+}
+
+.admin-page .group:hover .group-hover\:scale-105 {
+  transform: none;
+}
+
+.sm-gold-line {
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background-size: 200% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .sm-animate-in,
+  .sm-animate-fade,
+  .sm-animate-scale,
+  .sm-stagger > * {
+    animation: none !important;
+  }
+  .sm-card-lift,
+  .sm-press,
+  .sm-nav-item {
+    transition: none !important;
+  }
+  .sm-card-lift:hover,
+  .sm-nav-item:hover,
+  .sm-press:active {
+    transform: none !important;
+  }
+}
+
+/* Safer touch targets on small screens */
+@media (max-width: 640px) {
+  .sm-touch {
+    min-height: 44px;
+  }
 }

@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Cookie-session dashboards need request-time auth; Cache Components
+  // Insights overlays fire on every cookies()/Prisma access without Suspense.
   turbopack: {
     rules: {
       "*.css": {
