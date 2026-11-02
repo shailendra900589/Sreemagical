@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   // Hostinger shared builds hit process/thread limits with default worker counts.
   experimental: {
     cpus: 2,
