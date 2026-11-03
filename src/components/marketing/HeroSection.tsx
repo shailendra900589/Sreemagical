@@ -9,13 +9,13 @@ export function HeroSection() {
         <div className="absolute bottom-[-10%] right-[-5%] h-[380px] w-[380px] rounded-full bg-cyan-400/10 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-[1.15fr_0.85fr] md:px-6 md:py-20 lg:gap-14">
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-start lg:gap-12 lg:py-20 xl:gap-14">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">
             <ShieldCheck className="h-3.5 w-3.5 text-[#d4af37]" />
             Charity & Youth Welfare Model · SM Groups
           </div>
-          <h1 className="mt-5 text-4xl font-bold leading-[1.15] tracking-tight md:text-5xl lg:text-[3.4rem]">
+          <h1 className="mt-5 text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl md:text-5xl lg:text-[3.25rem]">
             <span className="text-[#ffd54f]">शिक्षा भी,</span>
             <br />
             रोज़गार भी!
@@ -55,7 +55,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           <PackageCard
             title="Education Package"
             titleHi="शिक्षा पैकेज"

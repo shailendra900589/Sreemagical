@@ -23,8 +23,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#001a40]/95 text-white backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-        <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
+        <Link
+          href="/"
+          className="flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3"
+          onClick={() => setOpen(false)}
+        >
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#d4af37] to-[#f5e6a8] text-lg font-bold text-[#001a40]">
             M
           </div>
@@ -34,15 +38,16 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex">
           {nav.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                title={item.en}
                 className={cn(
-                  "rounded-full px-3.5 py-2 text-sm transition-colors",
+                  "whitespace-nowrap rounded-full px-2.5 py-2 text-xs transition-colors 2xl:px-3.5 2xl:text-sm",
                   active ? "bg-white/10 text-[#d4af37]" : "text-white/85 hover:bg-white/5 hover:text-white",
                 )}
               >
@@ -52,13 +57,13 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <div className="hidden sm:block">
             <HeaderAuthActions />
           </div>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 xl:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -68,7 +73,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <div className="border-t border-white/10 bg-[#001530] px-4 py-4 lg:hidden">
+        <div className="border-t border-white/10 bg-[#001530] px-4 py-4 xl:hidden">
           <nav className="space-y-1">
             {nav.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);

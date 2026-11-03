@@ -13,7 +13,7 @@ export function AuthShell({
   subtitle: string;
 }) {
   return (
-    <div className="relative min-h-screen bg-[#f3f5f9]">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#f3f5f9]">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-[#d4af37]/15 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#001a40]/10 blur-3xl" />
@@ -36,8 +36,8 @@ export function AuthShell({
         </div>
       </header>
 
-      <div className="relative z-10 mx-auto grid max-w-6xl items-stretch gap-8 px-4 py-10 md:grid-cols-2 md:px-6 md:py-14">
-        <aside className="hidden overflow-hidden rounded-3xl bg-gradient-to-br from-[#001a40] via-[#002b5c] to-[#001028] p-8 text-white shadow-xl md:flex md:flex-col md:justify-between">
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-stretch gap-6 px-4 py-8 sm:px-6 sm:py-10 lg:grid-cols-2 lg:gap-8 lg:py-14">
+        <aside className="hidden overflow-hidden rounded-3xl bg-gradient-to-br from-[#001a40] via-[#002b5c] to-[#001028] p-8 text-white shadow-xl lg:flex lg:flex-col lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#d4af37]">
               {eyebrow}
@@ -77,8 +77,8 @@ export function AuthShell({
           </ul>
         </aside>
 
-        <div className="flex items-center">
-          <div className="w-full rounded-3xl border border-slate-200/80 bg-white p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)] md:p-8">
+        <div className="flex min-w-0 items-start lg:items-center">
+          <div className="mx-auto w-full max-w-md rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:max-w-lg sm:p-6 lg:max-w-none lg:p-8">
             {children}
           </div>
         </div>

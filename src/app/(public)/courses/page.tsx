@@ -4,7 +4,7 @@ import { BookMarked, Lock, Sparkles } from "lucide-react";
 import { CtaButton, PageHero } from "@/components/marketing/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { resolveCurriculum } from "@/lib/course-curriculum";
-import { prisma } from "@/lib/prisma";
+import { getPublishedCourses } from "@/lib/published-courses";
 import {
   absoluteUrl,
   breadcrumbJsonLd,
@@ -29,10 +29,7 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default async function CoursesPage() {
-  const courses = await prisma.course.findMany({
-    where: { isPublished: true },
-    orderBy: { sortOrder: "asc" },
-  });
+  const courses = await getPublishedCourses();
 
   return (
     <div>

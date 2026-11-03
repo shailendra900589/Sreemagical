@@ -71,6 +71,27 @@ if (existsSync(join(root, "public"))) {
   cpSync(join(root, "public"), join(standaloneRoot, "public"), { recursive: true });
 }
 
+const prismaSrc = join(root, "prisma");
+const prismaDest = join(standaloneRoot, "prisma");
+if (existsSync(prismaSrc)) {
+  mkdirSync(prismaDest, { recursive: true });
+  for (const name of readdirSync(prismaSrc)) {
+    if (name.endsWith(".db") || name.endsWith(".db-journal") || name === "schema.prisma") {
+      cpSync(join(prismaSrc, name), join(prismaDest, name));
+    }
+  }
+  const prodDb = join(prismaSrc, "prod.db");
+  const devDb = join(prismaSrc, "dev.db");
+  if (!existsSync(join(prismaDest, "prod.db")) && existsSync(devDb)) {
+    cpSync(devDb, join(prismaDest, "prod.db"));
+  }
+  if (!existsSync(join(prismaDest, "prod.db"))) {
+    console.warn("[sync-public-static] WARN: no prod.db copied — runtime will use course catalog fallback");
+  } else {
+    console.log("[sync-public-static] prisma → standalone");
+  }
+}
+
 // Hostinger Git build cwd: .../domains/sm.amrdev.in/hbuilds/source/repository
 const publicHtmlTargets = [
   join(root, "../../../public_html/_next/static"),
