@@ -17,6 +17,7 @@
 /.next/
 /_next/
 /out/
+/public/asset-manifest.json
 
 # production
 /build

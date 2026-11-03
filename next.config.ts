@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
-const appOrigin = (process.env.NEXT_PUBLIC_APP_URL || "https://sm.amrdev.in").replace(/\/$/, "");
-
 const nextConfig: NextConfig = {
   output: "standalone",
-  assetPrefix: process.env.NODE_ENV === "production" ? appOrigin : undefined,
   poweredByHeader: false,
   // Hostinger shared builds hit process/thread limits with default worker counts.
   experimental: {
@@ -18,7 +15,6 @@ const nextConfig: NextConfig = {
         source: "/_next/static/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
-          { key: "X-Content-Type-Options", value: "nosniff" },
         ],
       },
       {
