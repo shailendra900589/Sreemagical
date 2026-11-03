@@ -11,14 +11,14 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Do not use immutable year-long cache — browsers kept 404/HTML responses after bad deploys.
         source: "/_next/static/:path*",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          { key: "Cache-Control", value: "public, max-age=86400, must-revalidate" },
           { key: "X-Content-Type-Options", value: "nosniff" },
         ],
       },
       {
-        // Prevent LiteSpeed from caching HTML/RSC with stale CSS chunk hashes after deploy.
         source: "/((?!_next/static).*)",
         headers: [
           {

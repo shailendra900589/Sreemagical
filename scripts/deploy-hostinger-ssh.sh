@@ -26,13 +26,8 @@ npm install
 echo "==> Production build"
 npm run build
 
-echo "==> Standalone static assets"
+echo "==> Standalone static assets (also runs at end of npm run build)"
 node scripts/sync-public-static.mjs
-if [[ -d .next/standalone ]]; then
-  cp -r public .next/standalone/public 2>/dev/null || true
-  mkdir -p .next/standalone/.next
-  cp -r .next/static .next/standalone/.next/static 2>/dev/null || true
-fi
 
 echo ""
 echo "Build finished. In hPanel: sm.amrdev.in → Deployments → Restart application"
