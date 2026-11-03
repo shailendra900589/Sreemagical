@@ -12,7 +12,9 @@ function resolveDatabaseUrl(): string | undefined {
 }
 
 const productionDbUrl =
-  process.env.NODE_ENV === "production" ? resolveDatabaseUrl() : undefined;
+  process.env.NODE_ENV === "production" && process.env.DATABASE_URL?.startsWith("file:")
+    ? resolveDatabaseUrl()
+    : undefined;
 
 export const prisma =
   globalForPrisma.prisma ??

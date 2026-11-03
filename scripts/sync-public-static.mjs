@@ -71,9 +71,10 @@ if (existsSync(join(root, "public"))) {
   cpSync(join(root, "public"), join(standaloneRoot, "public"), { recursive: true });
 }
 
+const dbUrl = process.env.DATABASE_URL ?? "";
 const prismaSrc = join(root, "prisma");
 const prismaDest = join(standaloneRoot, "prisma");
-if (existsSync(prismaSrc)) {
+if (dbUrl.startsWith("file:") && existsSync(prismaSrc)) {
   mkdirSync(prismaDest, { recursive: true });
   for (const name of readdirSync(prismaSrc)) {
     if (name.endsWith(".db") || name.endsWith(".db-journal") || name === "schema.prisma") {
