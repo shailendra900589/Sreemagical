@@ -11,15 +11,14 @@ function resolveDatabaseUrl(): string | undefined {
   return `file:${path.join(process.cwd(), filePath)}`;
 }
 
-const datasourceUrl = resolveDatabaseUrl();
+const productionDbUrl =
+  process.env.NODE_ENV === "production" ? resolveDatabaseUrl() : undefined;
 
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-    ...(datasourceUrl
-      ? { datasources: { db: { url: datasourceUrl } } }
-      : {}),
+    ...(productionDbUrl ? { datasources: { db: { url: productionDbUrl } } } : {}),
   });
 
 if (process.env.NODE_ENV !== "production") {
