@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && node scripts/seed-safe.mjs && next build --webpack && node scripts/sync-public-static.mjs",
+    "build": "prisma generate && node scripts/ensure-db.mjs && node scripts/seed-safe.mjs && next build --webpack && node scripts/sync-public-static.mjs",
     "start": "next start",
     "lint": "eslint",
     "db:push": "prisma db push",
