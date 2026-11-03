@@ -27,6 +27,7 @@ echo "==> Production build"
 npm run build
 
 echo "==> Standalone static assets"
+node scripts/sync-public-static.mjs
 if [[ -d .next/standalone ]]; then
   cp -r public .next/standalone/public 2>/dev/null || true
   mkdir -p .next/standalone/.next
