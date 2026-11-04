@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { AuthField, AuthShell } from "@/components/auth/AuthShell";
+import { loginDemoList } from "@/lib/demo-accounts";
 
 export function LoginForm() {
   const router = useRouter();
@@ -101,21 +102,27 @@ export function LoginForm() {
         </p>
 
         <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Demo access</p>
-          <div className="mt-2 space-y-2 text-xs text-slate-600">
-            <p className="flex items-start gap-2">
-              <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9a7b1a]" />
-              <span>
-                <strong className="text-[#001a40]">Member:</strong> demo@srimagicale.in / demo123
-              </span>
-            </p>
-            <p className="flex items-start gap-2">
-              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9a7b1a]" />
-              <span>
-                <strong className="text-[#001a40]">Admin:</strong> admin@srimagicale.in / admin123
-              </span>
-            </p>
-          </div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Demo login</p>
+          <ul className="mt-3 space-y-3 text-xs text-slate-600">
+            {loginDemoList.map((account) => (
+              <li key={account.email} className="rounded-xl border border-white bg-white/80 px-3 py-2.5">
+                <p className="font-semibold text-[#001a40]">{account.label}</p>
+                {"hint" in account && account.hint ? (
+                  <p className="mt-0.5 text-[11px] text-slate-500">{account.hint}</p>
+                ) : null}
+                <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-slate-700">
+                  <Mail className="h-3.5 w-3.5 shrink-0 text-[#9a7b1a]" aria-hidden />
+                  <span>{account.email}</span>
+                  <span className="text-slate-300">·</span>
+                  <Lock className="h-3.5 w-3.5 shrink-0 text-[#9a7b1a]" aria-hidden />
+                  <span>{account.password}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-[11px] leading-5 text-slate-500">
+            Purana BP login bhi chalega: demo@srimagicale.in / demo123
+          </p>
         </div>
       </div>
     </AuthShell>

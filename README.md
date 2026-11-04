@@ -22,10 +22,12 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ### Demo accounts (after seed)
 
-| Role   | Email                 | Password  |
-|--------|------------------------|-----------|
-| Admin  | admin@srimagicale.in   | admin123  |
-| Member | demo@srimagicale.in    | demo123   |
+| Role        | Email                   | Password   |
+|-------------|-------------------------|------------|
+| Admin       | admin@srimagicale.in      | admin123   |
+| BP member   | bp@srimagicale.in       | bp123456   |
+| Edu member  | edu@srimagicale.in      | edu123456  |
+| BP (legacy) | demo@srimagicale.in     | demo123    |
 
 ## Business rules implemented
 
