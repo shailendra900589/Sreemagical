@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   referrer: "origin-when-cross-origin",
   icons: {
-    icon: [{ url: "/icon" }],
-    apple: [{ url: "/apple-icon" }],
+    icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/logo.jpg", type: "image/jpeg" }],
   },
   manifest: "/manifest.webmanifest",
   other: {

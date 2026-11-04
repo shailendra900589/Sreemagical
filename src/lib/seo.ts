@@ -153,7 +153,7 @@ export function organizationJsonLd() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: siteConfig.url,
-    logo: absoluteUrl("/icon"),
+    logo: absoluteUrl("/logo.jpg"),
     description: siteConfig.description,
     email: siteConfig.contactEmail,
     ...(siteConfig.contactPhone ? { telephone: siteConfig.contactPhone } : {}),

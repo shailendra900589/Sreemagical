@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { HeaderAuthActions } from "./HeaderAuthActions";
 import { cn } from "@/lib/utils";
 
@@ -29,9 +30,7 @@ export function SiteHeader() {
           className="flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3"
           onClick={() => setOpen(false)}
         >
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#d4af37] to-[#f5e6a8] text-lg font-bold text-[#001a40]">
-            M
-          </div>
+          <BrandLogo size={44} priority className="ring-white/20" />
           <div className="leading-tight">
             <p className="text-sm font-semibold tracking-wide">Sri Magicale</p>
             <p className="text-[11px] text-white/70">Powered by SM Groups</p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -61,9 +62,7 @@ export function AdminShell({
             >
               <Menu className="h-5 w-5" />
             </button>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d4af37] to-[#f0d878] text-sm font-bold text-[#001a40] sm:h-10 sm:w-10">
-              M
-            </div>
+            <BrandLogo size={40} className="ring-white/15" />
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold">Sri Magicale Admin</p>
               <p className="hidden text-[11px] text-white/60 sm:block">SM Groups control panel</p>

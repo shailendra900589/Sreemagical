@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -108,9 +109,7 @@ export function PreviewShell({
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
             <Link href={base} className="flex min-w-0 items-center gap-2.5">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d4af37] to-[#f0d878] text-sm font-bold text-[#001a40] sm:h-10 sm:w-10">
-                M
-              </div>
+              <BrandLogo size={40} className="ring-white/15" />
               <div className="min-w-0 leading-tight">
                 <p className="truncate text-sm font-semibold tracking-wide">Sri Magicale</p>
                 <p className="hidden text-[11px] text-white/65 sm:block">
